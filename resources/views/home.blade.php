@@ -14,7 +14,7 @@
             <p class="text-lg mb-8 text-indigo-100">
                 Temukan ribuan produk berkualitas dari seller terpercaya.
             </p>
-            <a href="#produk"
+            <a href="{{ route('products.index') }}"
                class="inline-block bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition">
                 Jelajahi Produk
             </a>

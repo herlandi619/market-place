@@ -85,14 +85,72 @@
                 </a>
 
                 @auth
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit"
-                                class="px-5 py-2 rounded-full bg-red-600 text-white text-sm
-                                    hover:bg-red-700 transition">
-                            Logout
+
+                    <a href="{{ route('cart.index') }}"
+                    class="relative inline-flex items-center gap-2
+                            px-4 py-2 rounded-full
+                            bg-gray-100 text-gray-700
+                            hover:bg-indigo-100 hover:text-indigo-600
+                            transition">
+                        🛒 Keranjang
+
+                        @if($cartCount > 0)
+                            <span class="absolute -top-2 -right-2
+                                        bg-red-600 text-white
+                                        text-xs font-bold
+                                        w-5 h-5
+                                        flex items-center justify-center
+                                        rounded-full">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                    </a>
+
+
+
+                    <div x-data="{ open: false }" class="relative">
+                        <!-- Trigger -->
+                        <button
+                            @click="open = !open"
+                            class="flex items-center gap-2 px-4 py-2 rounded-full
+                                bg-gray-100 hover:bg-gray-200 transition text-sm"
+                        >
+                            Hello, {{ Auth::user()->name }}
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
                         </button>
-                    </form>
+
+                        <!-- Dropdown -->
+                        <div
+                            x-show="open"
+                            @click.outside="open = false"
+                            x-transition
+                            class="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg overflow-hidden z-50"
+                        >
+                            <!-- Profile -->
+                            <a href="{{ route('profile.edit') }}"
+                            class="block px-4 py-3 text-sm hover:bg-gray-100">
+                                Profile
+                            </a>
+
+                            <!-- Divider -->
+                            <div class="border-t"></div>
+
+                            <!-- Logout -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                        class="w-full text-left px-4 py-3 text-sm text-red-600
+                                            hover:bg-red-50">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
 
                 @else
                     <a href="{{ route('login') }}"
@@ -118,6 +176,17 @@
             </a>
 
             @auth
+
+                <a href="{{ route('cart.index') }}"
+                    class="relative inline-flex items-center gap-2
+                            px-4 py-2 rounded-full
+                            bg-gray-100 text-gray-700
+                            hover:bg-indigo-100 hover:text-indigo-600
+                            transition">
+                        🛒 Keranjang
+                    </a>
+
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"

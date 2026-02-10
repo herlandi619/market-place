@@ -124,20 +124,48 @@
                                     {{ $product->description }}
                                 </p>
 
-                                <div class="flex justify-between items-center">
-                                    <span class="text-indigo-600 text-lg font-bold">
-                                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                                    </span>
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                    @csrf
 
-                                    <button
-                                        @click="open = false"
-                                        class="px-4 py-2 rounded-full
-                                            bg-gray-200 hover:bg-gray-300 transition"
-                                    >
-                                        Tutup
-                                    </button>
-                                </div>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-indigo-600 text-lg font-bold">
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                        </span>
+                                    </div>
+
+                                    <!-- QTY -->
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            Jumlah
+                                        </label>
+                                        <input
+                                            type="number"
+                                            name="qty"
+                                            min="1"
+                                            value="1"
+                                            class="w-24 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-indigo-200"
+                                        >
+                                    </div>
+
+                                    <div class="flex justify-end gap-2">
+                                        <button
+                                            type="button"
+                                            @click="open = false"
+                                            class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300"
+                                        >
+                                            Tutup
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="px-5 py-2 rounded-full bg-green-600 text-white hover:bg-green-700"
+                                        >
+                                            + Keranjang
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
+
 
                         </div>
                     </div>
