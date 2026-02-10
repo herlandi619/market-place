@@ -20,7 +20,35 @@
 <section class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
+                <!-- SEARCH -->
+        <form method="GET" action="{{ route('products.index') }}" class="mb-8">
+            <div class="max-w-md mx-auto">
+                <div class="relative">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Cari produk..."
+                        class="w-full pl-4 pr-12 py-3 rounded-full
+                            border border-gray-300
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500
+                            text-sm"
+                    >
+
+                    <button type="submit"
+                            class="absolute right-1 top-1
+                                px-4 py-2 rounded-full
+                                bg-indigo-600 text-white text-sm
+                                hover:bg-indigo-700 transition">
+                        Cari
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+
             @forelse ($products as $product)
                 <div 
                     x-data="{ open: false }"
@@ -127,6 +155,18 @@
         <div class="mt-12 flex justify-center">
             {{ $products->links() }}
         </div>
+
+        @if(request('search'))
+            <div class="text-center mb-6">
+                <a href="{{ route('products.index') }}"
+                class="px-4 py-2 text-sm rounded-full
+                                    bg-indigo-600 text-white
+                                    hover:bg-indigo-700 transition">
+                    Reset pencarian
+                </a>
+            </div>
+        @endif
+
 
     </div>
 </section>
