@@ -164,50 +164,135 @@
 
         <!-- MOBILE MENU -->
         <div x-show="open"
-             x-transition
-             @click.outside="open = false"
-             class="sm:hidden mt-4 space-y-2">
+            x-transition
+            x-cloak
+            @click.outside="open = false"
+            class="sm:hidden mt-4 space-y-3">
 
+            <!-- All Products -->
             <a href="{{ route('products.index') }}"
-               class="block w-full px-4 py-2 rounded-lg
-                      bg-gray-100 text-gray-700 text-sm
-                      hover:bg-indigo-100 hover:text-indigo-600 transition">
-                All Products
+            class="flex items-center gap-3
+                    w-full px-4 py-3
+                    rounded-xl
+                    bg-gray-100 text-gray-700 text-sm font-medium
+                    hover:bg-indigo-100 hover:text-indigo-600
+                    transition">
+                📦 <span>All Products</span>
             </a>
 
             @auth
-
+                <!-- Cart -->
                 <a href="{{ route('cart.index') }}"
-                    class="relative inline-flex items-center gap-2
-                            px-4 py-2 rounded-full
-                            bg-gray-100 text-gray-700
+                    class="flex items-center gap-3
+                            w-full px-4 py-3
+                            rounded-xl
+                            bg-gray-100 text-gray-700 text-sm font-medium
                             hover:bg-indigo-100 hover:text-indigo-600
                             transition">
-                        🛒 Keranjang
+
+                        <!-- ICON + BADGE -->
+                        <span class="relative inline-flex items-center justify-center">
+                            🛒
+                            @if($cartCount > 0)
+                                <span class="absolute -top-2 -right-2
+                                            bg-red-600 text-white
+                                            text-[10px] font-bold
+                                            min-w-[18px] h-[18px]
+                                            flex items-center justify-center
+                                            rounded-full">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif
+                        </span>
+
+                        <!-- TEXT -->
+                        <span>Keranjang</span>
                     </a>
 
+                    <!-- Trigger -->
+                    <button
+                        @click="open = !open"
+                        class="flex items-center justify-between
+                            w-full px-4 py-3
+                            rounded-xl
+                            bg-gray-100 text-gray-700
+                            text-sm font-medium
+                            hover:bg-gray-200 transition"
+                    >
+                        <span>Hello, {{ Auth::user()->name }}</span>
 
+                        <svg class="w-4 h-4 transition"
+                            :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Mobile -->
+                    <div x-show="open"
+                        x-transition
+                        x-cloak
+                        class="mt-2 space-y-2">
+
+                        <!-- Profile -->
+                        <a href="{{ route('profile.edit') }}"
+                        @click="open = false"
+                        class="block w-full px-4 py-3
+                                rounded-xl
+                                bg-gray-100 text-sm
+                                hover:bg-indigo-100 hover:text-indigo-600
+                                transition">
+                            👤 Profile
+                        </a>
+
+                        <!-- Logout -->
+                        <form method="POST" action="{{ route('logout') }}"
+                            @submit="open = false">
+                            @csrf
+                            <button type="submit"
+                                    class="block w-full px-4 py-3
+                                        rounded-xl
+                                        bg-red-600 text-white
+                                        text-sm font-semibold
+                                        hover:bg-red-700 transition">
+                                🚪 Logout
+                            </button>
+                        </form>
+                    </div>
+                    
+
+
+                {{-- <!-- Logout -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                            class="block w-full px-4 py-3
-                                rounded-lg
+                            class="flex items-center gap-3
+                                w-full px-4 py-3
+                                rounded-xl
                                 bg-red-600 text-white
-                                text-sm font-medium
+                                text-sm font-semibold
                                 hover:bg-red-700
                                 transition">
-                        Logout
+                        🚪 <span>Logout</span>
                     </button>
-                </form>
+                </form> --}}
             @else
+                <!-- Login -->
                 <a href="{{ route('login') }}"
-                   class="block w-full px-4 py-2 rounded-lg
-                          bg-blue-600 text-white text-sm
-                          hover:bg-blue-700 transition">
-                    Login
+                class="flex items-center gap-3
+                        w-full px-4 py-3
+                        rounded-xl
+                        bg-blue-600 text-white
+                        text-sm font-semibold
+                        hover:bg-blue-700
+                        transition">
+                    🔐 <span>Login</span>
                 </a>
             @endauth
         </div>
+
     </div>
 </nav>
 

@@ -7,6 +7,13 @@
 
     <h2 class="text-2xl font-bold mb-8">Keranjang Belanja</h2>
 
+    @if(session('success'))
+        <x-alert type="success">
+            {{ session('success') }}
+        </x-alert>
+    @endif
+
+
     @if ($carts->count())
         <div class="bg-white rounded-xl shadow overflow-hidden">
             <table class="w-full">
@@ -49,13 +56,65 @@
                             </td>
 
                             <td class="p-4 text-center">
-                                <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                {{-- <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="text-red-600 hover:underline">
                                         🗑
                                     </button>
-                                </form>
+                                </form> --}}
+                                <div x-data="{ confirm: false }" class="inline-block">
+
+                                    <!-- Trigger Hapus -->
+                                    <button @click="confirm = true"
+                                            type="button"
+                                            class="text-red-600 hover:underline">
+                                        🗑
+                                    </button>
+
+                                    <!-- MODAL KONFIRMASI -->
+                                    <div x-show="confirm"
+                                        x-transition
+                                        x-cloak
+                                        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+
+                                        <div @click.away="confirm = false"
+                                            class="bg-white w-full max-w-sm mx-4 rounded-xl p-6">
+
+                                            <h3 class="text-lg font-semibold mb-2">
+                                                Hapus produk?
+                                            </h3>
+
+                                            <p class="text-sm text-gray-600 mb-6">
+                                                Apakah kamu yakin ingin menghapus item ini dari keranjang?
+                                            </p>
+
+                                            <div class="flex justify-end gap-3">
+                                                <!-- Tidak -->
+                                                <button @click="confirm = false"
+                                                        type="button"
+                                                        class="px-4 py-2 rounded-full
+                                                            bg-gray-200 hover:bg-gray-300 text-sm">
+                                                    Tidak
+                                                </button>
+
+                                                <!-- Ya -->
+                                                <form action="{{ route('cart.remove', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="px-4 py-2 rounded-full
+                                                                bg-red-600 text-white text-sm
+                                                                hover:bg-red-700">
+                                                        Ya, Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                     @endforeach

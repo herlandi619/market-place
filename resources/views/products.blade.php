@@ -47,6 +47,13 @@
         </form>
 
 
+        {{-- ALERT --}}
+        @if(session('success'))
+            <x-alert type="success">
+                {{ session('success') }}
+            </x-alert>
+        @endif
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
 
             @forelse ($products as $product)
