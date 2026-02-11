@@ -124,6 +124,24 @@
             <div class="p-6 text-right font-bold text-lg">
                 Total: Rp {{ number_format($total, 0, ',', '.') }}
             </div>
+
+
+            {{-- halaman checkout --}}
+            <div class="p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t">
+    
+                <div class="font-bold text-lg">
+                    Total: Rp {{ number_format($total, 0, ',', '.') }}
+                </div>
+
+                <a href="{{ route('checkout.index') }}"
+                class="px-6 py-3 rounded-full
+                        bg-green-600 text-white
+                        hover:bg-green-700 transition">
+                    Checkout →
+                </a>
+            </div>
+
+
         </div>
     @else
         <p class="text-gray-500">Keranjang masih kosong.</p>

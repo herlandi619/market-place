@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cartCount', $cartCount);
         });
 
-        URL::forceScheme('https');
+        // ngrox 4
+        // URL::forceScheme('https');
     }
 }

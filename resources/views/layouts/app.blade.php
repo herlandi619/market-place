@@ -1,43 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
-</html> --}}
-
-
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -81,30 +41,76 @@
                 <a href="{{ route('products.index') }}"
                    class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm
                           hover:bg-indigo-100 hover:text-indigo-600 transition">
-                    All Products
+                    📦 All Products
                 </a>
 
                 @auth
+                    <div x-data="{ open: false }" class="relative">
 
-                    <a href="{{ route('cart.index') }}"
-                    class="relative inline-flex items-center gap-2
+                    <!-- Trigger Button -->
+                    <button 
+                        @click="open = !open"
+                        class="relative inline-flex items-center gap-2
                             px-4 py-2 rounded-full
-                            bg-gray-100 text-gray-700
+                            bg-gray-100 text-gray-700 text-sm
                             hover:bg-indigo-100 hover:text-indigo-600
                             transition">
-                        🛒 Keranjang
 
+                        🛍️ Menu
+
+                        <!-- Cart Badge -->
                         @if($cartCount > 0)
-                            <span class="absolute -top-2 -right-2
+                            <span class="absolute -top-1 -right-1
                                         bg-red-600 text-white
                                         text-xs font-bold
-                                        w-5 h-5
+                                        min-w-[18px] h-[18px]
                                         flex items-center justify-center
+                                        px-1
                                         rounded-full">
                                 {{ $cartCount }}
                             </span>
                         @endif
-                    </a>
+
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div 
+                        x-show="open"
+                        @click.outside="open = false"
+                        x-transition
+                        class="absolute right-0 mt-2 w-48
+                            bg-white rounded-xl shadow-lg
+                            overflow-hidden z-50">
+
+                        <a href="{{ route('cart.index') }}"
+                        class="flex items-center justify-between
+                                px-4 py-3 text-sm
+                                hover:bg-gray-100 transition">
+                            🛒 Keranjang
+
+                            @if($cartCount > 0)
+                                <span class="bg-red-600 text-white
+                                            text-xs font-bold
+                                            px-2 py-0.5 rounded-full">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif
+                        </a>
+
+                        <a href="{{ route('orders.index') }}"
+                        class="flex items-center
+                                px-4 py-3 text-sm
+                                hover:bg-gray-100 transition">
+                            📌 My Orders
+                        </a>
+                    </div>
+
+                </div>
 
 
 
@@ -115,7 +121,7 @@
                             class="flex items-center gap-2 px-4 py-2 rounded-full
                                 bg-gray-100 hover:bg-gray-200 transition text-sm"
                         >
-                            Hello, {{ Auth::user()->name }}
+                            Hello, {{ Auth::user()->name }} 😉
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -209,6 +215,27 @@
                         <span>Keranjang</span>
                     </a>
 
+
+                    <a href="{{ route('orders.index') }}"
+                    class="flex items-center gap-3
+                            w-full px-4 py-3
+                            rounded-xl
+                            bg-gray-100 text-gray-700 text-sm font-medium
+                            hover:bg-indigo-100 hover:text-indigo-600
+                            transition">
+
+                        <!-- ICON + BADGE -->
+                        <span class="relative inline-flex items-center justify-center">
+                            📌
+                            
+                        </span>
+
+                        <!-- TEXT -->
+                        <span>My Orders</span>
+                    </a>
+
+
+
                     <!-- Trigger -->
                     <button
                         @click="open = !open"
@@ -261,23 +288,6 @@
                             </button>
                         </form>
                     </div>
-                    
-
-
-                {{-- <!-- Logout -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                            class="flex items-center gap-3
-                                w-full px-4 py-3
-                                rounded-xl
-                                bg-red-600 text-white
-                                text-sm font-semibold
-                                hover:bg-red-700
-                                transition">
-                        🚪 <span>Logout</span>
-                    </button>
-                </form> --}}
             @else
                 <!-- Login -->
                 <a href="{{ route('login') }}"

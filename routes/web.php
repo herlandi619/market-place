@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -25,6 +28,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.remove');
+
+
+    // CHECKOUT
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+
+    // PAYMENT
+    Route::get('/payment/{order}', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/payment/{order}', [PaymentController::class, 'store'])->name('payment.store');
+
+    // ORDER
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+
 });
 
 
