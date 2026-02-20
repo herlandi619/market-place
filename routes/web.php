@@ -1,19 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CheckoutController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 
 
+
+// BUYERRR --------------------------------------------------------------------------------
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -45,7 +49,22 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// BUYERRR --------------------------------------------------------------------------------
+
+// ADMIN START --------------------------------------------------------------------------------
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    // List
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+
+    // Toogle Status
+    Route::patch('/users/{user}/toggle-status',
+            [UserController::class, 'toggleStatus'])
+            ->name('admin.users.toggleStatus');
+
+});
 
 
-
+// ADMIN END--------------------------------------------------------------------------------
 require __DIR__.'/auth.php';
