@@ -13,6 +13,7 @@
            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
             + Tambah User
         </a>
+        
     </div>
 
     {{-- Notifikasi --}}
@@ -78,22 +79,22 @@
                     <td class="text-center space-x-2">
 
                         {{-- Edit --}}
-                        {{-- <a href="{{ route('admin.users.edit', $user->id) }}"
+                        <a href="{{ route('admin.users.edit', $user->name) }}"
                            class="text-blue-600 hover:underline">
-                            Edit
-                        </a> --}}
+                            ✏
+                        </a>
 
                         {{-- Delete --}}
-                        {{-- <form action="{{ route('admin.users.destroy', $user->id) }}"
+                        <form action="{{ route('admin.users.destroy', $user->id) }}"
                               method="POST"
                               class="inline"
                               onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                             @csrf
                             @method('DELETE')
                             <button class="text-red-600 hover:underline">
-                                Delete
+                                🗑
                             </button>
-                        </form> --}}
+                        </form>
 
                         {{-- Toggle Status --}}
                         <form action="{{ route('admin.users.toggleStatus', $user->id) }}"
@@ -103,7 +104,7 @@
                             @method('PATCH')
 
                             <button class="text-yellow-600 hover:underline">
-                                {{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}
+                                {{ $user->is_active ? '❌' : '✔' }}
                             </button>
                         </form>
 
@@ -124,6 +125,11 @@
     <div class="mt-6">
         {{ $users->links() }}
     </div>
+
+    <a href="{{ route('admin.dashboard') }}"
+           class="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm">
+            <- Kembali
+        </a>
 
 </div>
 @endsection
