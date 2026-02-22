@@ -63,6 +63,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
             [UserController::class, 'toggleStatus'])
             ->name('admin.users.toggleStatus');
 
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+
 });
 
 
