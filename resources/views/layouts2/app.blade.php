@@ -90,11 +90,11 @@
                             🙎‍♂️ Manajemen Akun
                         </a>
 
-                        <a href="{{ route('orders.index') }}"
+                        <a href="{{ route('admin.categories.index') }}"
                         class="flex items-center
                                 px-4 py-3 text-sm
                                 hover:bg-gray-100 transition">
-                            📌 My Orders
+                            📌 Manajemen Kategori
                         </a>
                     </div>
 
@@ -185,7 +185,7 @@
                     </a>
 
 
-                    <a href="{{ route('orders.index') }}"
+                    <a href="{{ route('admin.categories.index') }}"
                     class="flex items-center gap-3
                             w-full px-4 py-3
                             rounded-xl
@@ -200,7 +200,7 @@
                         </span>
 
                         <!-- TEXT -->
-                        <span>My Orders</span>
+                        <span>Manajemen Kategori</span>
                     </a>
 
 

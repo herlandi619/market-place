@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -55,7 +56,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    // List
+    
+    //  USER Manajement START
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
 
     // Toogle Status
@@ -72,6 +74,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
 
     Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+    //  USER Manajement END
+
+    // Manajemen Kategori Produk START
+    Route::get('/', [CategoryController::class, 'index'])->name('admin.categories.index');
+
+    Route::get('/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+
+    Route::post('/', [CategoryController::class, 'store'])->name('admin.categories.store');
+
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
+    Route::get('/{category:name}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+
+    Route::put('/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+
+    // Manajemen Kategori Produk END
+
 });
 
 
