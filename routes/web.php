@@ -6,7 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -90,6 +90,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
 
     // Manajemen Kategori Produk END
+
+    // Manajemen Transaksi START
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+
+    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])
+        ->name('admin.orders.updateStatus');
+
+    // Manajemen Transaksi END
 
 });
 
