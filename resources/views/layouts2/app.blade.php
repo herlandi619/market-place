@@ -97,12 +97,28 @@
                             📌 Manajemen Kategori
                         </a>
 
-                        <a href="{{ route('admin.orders.index') }}"
+                        {{-- <a href="{{ route('admin.orders.index') }}"
                         class="flex items-center
                                 px-4 py-3 text-sm
                                 hover:bg-gray-100 transition">
                             💲 Manajemen Transaksi
+                        </a> --}}
+
+                        <a href="{{ route('admin.orders.index') }}"
+                        class="flex items-center justify-between
+                                px-4 py-3 text-sm
+                                hover:bg-gray-100 transition">
+
+                            <span>💲 Manajemen Transaksi</span>
+
+                            @if(isset($pendingOrdersCount) && $pendingOrdersCount > 0)
+                                <span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full">
+                                    {{ $pendingOrdersCount }}
+                                </span>
+                            @endif
                         </a>
+
+
                     </div>
 
                 </div>
@@ -212,22 +228,31 @@
 
 
                     <a href="{{ route('admin.orders.index') }}"
-                    class="flex items-center gap-3
-                            w-full px-4 py-3
-                            rounded-xl
-                            bg-gray-100 text-gray-700 text-sm font-medium
-                            hover:bg-indigo-100 hover:text-indigo-600
-                            transition">
+                        class="flex items-center gap-3
+                                w-full px-4 py-3
+                                rounded-xl
+                                bg-gray-100 text-gray-700 text-sm font-medium
+                                hover:bg-indigo-100 hover:text-indigo-600
+                                transition">
 
-                        <!-- ICON + BADGE -->
-                        <span class="relative inline-flex items-center justify-center">
-                            💲
-                            
-                        </span>
+                            <!-- ICON + BADGE -->
+                            <span class="relative inline-flex items-center justify-center w-6 h-6 text-lg">
+                                💲
 
-                        <!-- TEXT -->
-                        <span>Manajemen Transaksi</span>
-                    </a>
+                                @if(isset($pendingOrdersCount) && $pendingOrdersCount > 0)
+                                    <span class="absolute -top-1 -right-1
+                                                bg-red-600 text-white text-[10px]
+                                                min-w-[16px] h-[16px]
+                                                flex items-center justify-center
+                                                rounded-full">
+                                        {{ $pendingOrdersCount }}
+                                    </span>
+                                @endif
+                            </span>
+
+                            <!-- TEXT -->
+                            <span>Manajemen Transaksi</span>
+                        </a>
 
 
 

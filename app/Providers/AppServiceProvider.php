@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,17 +23,40 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('*', function ($view) {
-            $cartCount = 0;
+         View::composer('*', function ($view) {
 
-            if (auth()->check()) {
-                $cartCount = Cart::where('user_id', auth()->id())
-                    ->sum('qty');
-            }
+                $cartCount = 0;
+                $pendingOrdersCount = 0;
+                $paidOrdersCount = 0;
 
-            $view->with('cartCount', $cartCount);
-        });
+                if (auth()->check()) {
 
+                    // ✅ Cart Buyer
+                    $cartCount = Cart::where('user_id', auth()->id())
+                        ->sum('qty');
+
+                    // ✅ Admin Notification (Order Pending Today)
+                    if (auth()->user()->role === 'admin') {
+                        $pendingOrdersCount = Order::where('status', 'pending')
+                            ->whereDate('created_at', today())
+                            ->count();
+                    }
+
+                    // ✅ Buyer Notification (Order Sudah Paid)
+                    if (auth()->user()->role === 'buyer') {
+                        $paidOrdersCount = Order::where('user_id', auth()->id())
+                            ->where('status', 'paid')
+                            ->whereDate('updated_at', today())
+                            ->count();
+                    }
+                }
+
+                $view->with([
+                    'cartCount' => $cartCount,
+                    'pendingOrdersCount' => $pendingOrdersCount,
+                    'paidOrdersCount' => $paidOrdersCount
+                ]);
+            });
         // ngrox 4
         // URL::forceScheme('https');
     }

@@ -17,10 +17,27 @@
 
         <div class="flex justify-between items-center">
             <!-- LOGO -->
-            <a href="{{ route('home') }}"
+            {{-- <a href="{{ route('home') }}"
                class="text-xl sm:text-2xl font-bold text-indigo-600">
                 MarketPlace
+            </a> --}}
+            <a href="
+                @auth
+                    @if(Auth::user()->role === 'admin')
+                        {{ route('admin.dashboard') }}
+                    @elseif(Auth::user()->role === 'seller')
+                        {{ route('seller.dashboard') }}
+                    @else
+                        {{ route('home') }}
+                    @endif
+                @else
+                    {{ route('home') }}
+                @endauth
+            "
+            class="text-xl sm:text-2xl font-bold text-indigo-600">
+                MarketPlace
             </a>
+
 
             <!-- HAMBURGER (MOBILE) -->
             <button @click="open = !open"
@@ -102,12 +119,24 @@
                             @endif
                         </a>
 
-                        <a href="{{ route('orders.index') }}"
+                        {{-- <a href="{{ route('orders.index') }}"
                         class="flex items-center
                                 px-4 py-3 text-sm
                                 hover:bg-gray-100 transition">
                             📌 My Orders
+                        </a> --}}
+                        <a href="{{ route('orders.index') }}"
+                        class="flex items-center justify-between px-4 py-3 text-sm hover:bg-gray-100 transition">
+
+                            <span>📦 Pesanan Saya</span>
+
+                            @if(isset($paidOrdersCount) && $paidOrdersCount > 0)
+                                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">
+                                    {{ $paidOrdersCount }}
+                                </span>
+                            @endif
                         </a>
+
                     </div>
 
                 </div>
@@ -217,22 +246,31 @@
 
 
                     <a href="{{ route('orders.index') }}"
-                    class="flex items-center gap-3
-                            w-full px-4 py-3
-                            rounded-xl
-                            bg-gray-100 text-gray-700 text-sm font-medium
-                            hover:bg-indigo-100 hover:text-indigo-600
-                            transition">
+                        class="flex items-center gap-3
+                                w-full px-4 py-3
+                                rounded-xl
+                                bg-gray-100 text-gray-700 text-sm font-medium
+                                hover:bg-indigo-100 hover:text-indigo-600
+                                transition">
 
-                        <!-- ICON + BADGE -->
-                        <span class="relative inline-flex items-center justify-center">
-                            📌
-                            
-                        </span>
+                            <!-- ICON + BADGE -->
+                            <span class="relative inline-flex items-center justify-center w-6 h-6 text-lg">
+                                📌
 
-                        <!-- TEXT -->
-                        <span>My Orders</span>
-                    </a>
+                                @if(isset($paidOrdersCount) && $paidOrdersCount > 0)
+                                    <span class="absolute -top-1 -right-1
+                                                bg-green-600 text-white text-[10px]
+                                                min-w-[16px] h-[16px]
+                                                flex items-center justify-center
+                                                rounded-full">
+                                        {{ $paidOrdersCount }}
+                                    </span>
+                                @endif
+                            </span>
+
+                            <!-- TEXT -->
+                            <span>My Orders</span>
+                        </a>
 
 
 

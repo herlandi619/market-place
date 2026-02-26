@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -92,13 +95,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Manajemen Kategori Produk END
 
     // Manajemen Transaksi START
-    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
 
-    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])
         ->name('admin.orders.updateStatus');
 
     // Manajemen Transaksi END
 
+    // Payment START
+    Route::get('/payments', [PaymentsController::class, 'index'])->name('admin.payments.index');
+
+    Route::put('/payments/{payment}/approve', [PaymentsController::class, 'approve'])
+        ->name('admin.payments.approve');
+
+    Route::put('/payments/{payment}/reject', [PaymentsController::class, 'reject'])
+        ->name('admin.payments.reject');
+
+    // Payment END
 });
 
 
