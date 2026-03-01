@@ -2,14 +2,15 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\PaymentsController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -112,6 +113,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         ->name('admin.payments.reject');
 
     // Payment END
+
+    // REPORT START
+    Route::get('/reports', [ReportController::class, 'index'])->name('admin.reports.index');
+
+    Route::get('/report/export/pdf', [ReportController::class, 'exportPdf'])->name('report.export.pdf');
+    // REPORT END
 });
 
 

@@ -97,12 +97,6 @@
                             📌 Manajemen Kategori
                         </a>
 
-                        {{-- <a href="{{ route('admin.orders.index') }}"
-                        class="flex items-center
-                                px-4 py-3 text-sm
-                                hover:bg-gray-100 transition">
-                            💲 Manajemen Transaksi
-                        </a> --}}
 
                         <a href="{{ route('admin.orders.index') }}"
                         class="flex items-center justify-between
@@ -116,6 +110,13 @@
                                     {{ $pendingOrdersCount }}
                                 </span>
                             @endif
+                        </a>
+
+                        <a href="{{ route('admin.reports.index') }}"
+                        class="flex items-center
+                                px-4 py-3 text-sm
+                                hover:bg-gray-100 transition">
+                            📊 Report Seller
                         </a>
 
 
@@ -253,6 +254,24 @@
                             <!-- TEXT -->
                             <span>Manajemen Transaksi</span>
                         </a>
+
+                        <a href="{{ route('admin.reports.index') }}"
+                    class="flex items-center gap-3
+                            w-full px-4 py-3
+                            rounded-xl
+                            bg-gray-100 text-gray-700 text-sm font-medium
+                            hover:bg-indigo-100 hover:text-indigo-600
+                            transition">
+
+                        <!-- ICON + BADGE -->
+                        <span class="relative inline-flex items-center justify-center">
+                            📊
+                            
+                        </span>
+
+                        <!-- TEXT -->
+                        <span>Report Seller</span>
+                    </a>
 
 
 
