@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
 // ADMIN START --------------------------------------------------------------------------------
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
+
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     
     //  USER Manajement START
