@@ -14,6 +14,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Seller\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -119,8 +120,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/report/export/pdf', [ReportController::class, 'exportPdf'])->name('report.export.pdf');
     // REPORT END
+
 });
 
-
 // ADMIN END--------------------------------------------------------------------------------
+
+
+// SELLER START
+Route::middleware(['auth', 'seller'])->prefix('seller')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('seller.dashboard');
+
+});
+// SELLER END
+
+
 require __DIR__.'/auth.php';
