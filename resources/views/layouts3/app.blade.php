@@ -17,7 +17,7 @@
 
         <div class="flex justify-between items-center">
             <!-- LOGO -->
-            <a href="{{ route('admin.dashboard') }}"
+            <a href="{{ route('seller.dashboard') }}"
                class="text-xl sm:text-2xl font-bold text-indigo-600">
                 MarketPlace
             </a>
@@ -83,7 +83,7 @@
                             bg-white rounded-xl shadow-lg
                             overflow-hidden z-50">
 
-                        <a href="{{ route('admin.users.index') }}"
+                        <a href="{{ route('seller.products.index') }}"
                         class="flex items-center justify-between
                                 px-4 py-3 text-sm
                                 hover:bg-gray-100 transition">

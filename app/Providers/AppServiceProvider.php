@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -59,5 +60,8 @@ class AppServiceProvider extends ServiceProvider
             });
         // ngrox 4
         // URL::forceScheme('https');
+
+        // tailwind
+         Paginator::useTailwind();
     }
 }
