@@ -15,7 +15,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Seller\DashboardController;
+use App\Http\Controllers\Seller\OrderController as SellerOrderController;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
+use App\Http\Controllers\Seller\StokController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -130,14 +132,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 // SELLER START
 Route::middleware(['auth', 'seller'])->prefix('seller')->group(function () {
-
+    // DASHBOARD
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('seller.dashboard');
+    
+    // KELOLA PRODUK 
     Route::get('/products', [SellerProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [SellerProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products/store', [SellerProductController::class, 'store'])->name('seller.products.store');
     Route::get('/products/{product:name}/edit', [SellerProductController::class, 'edit'])->name('seller.products.edit');
     Route::put('/products/{id}', [SellerProductController::class, 'update'])->name('seller.products.update');
     Route::delete('/products/{product:name}', [SellerProductController::class, 'destroy'])->name('seller.products.destroy');
+
+    // ORDER
+    Route::get('/order', [SellerOrderController::class, 'index'])->name('seller.orders.index');
+
+    // PROSES ORDER
+    Route::post('/seller/orders/process/{id}', [SellerOrderController::class,'process'])->name('seller.orders.process');
+    
 
 });
 // SELLER END

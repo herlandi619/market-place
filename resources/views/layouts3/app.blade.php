@@ -90,6 +90,15 @@
                             📦 Kelola Produk
                         </a>
 
+                        <a href="{{ route('seller.orders.index') }}"
+                        class="flex items-center justify-between
+                                px-4 py-3 text-sm
+                                hover:bg-gray-100 transition">
+                            📑 Barang Pesanan
+                        </a>
+
+                       
+
                        
 
 
@@ -181,6 +190,24 @@
                         <span>Kelola Produk</span>
                     </a>
 
+
+                    <a href="{{ route('seller.orders.index') }}"
+                    class="flex items-center gap-3
+                            w-full px-4 py-3
+                            rounded-xl
+                            bg-gray-100 text-gray-700 text-sm font-medium
+                            hover:bg-indigo-100 hover:text-indigo-600
+                            transition">
+
+                        <!-- ICON + BADGE -->
+                        <span class="relative inline-flex items-center justify-center">
+                            📑
+                            
+                        </span>
+
+                        <!-- TEXT -->
+                        <span>Barang Pesanan</span>
+                    </a>
 
                     
 
