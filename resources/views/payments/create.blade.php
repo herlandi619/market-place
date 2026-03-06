@@ -22,6 +22,14 @@
                 required>
         </div>
 
+        {{-- Alamat Pengiriman --}}
+        <div class="mb-4">
+            <label class="block font-medium">Alamat Pengiriman</label>
+            <textarea name="address"
+                class="w-full border rounded px-3 py-2 mt-1"
+                placeholder="Masukkan alamat lengkap (opsional)"></textarea>
+        </div>
+
         <div class="mb-4">
             <label class="block font-medium">Upload Bukti (JPG/PNG)</label>
             <input type="file" name="payment_proof"

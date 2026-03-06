@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'All Products | Marketplace')
@@ -54,6 +55,12 @@
             </x-alert>
         @endif
 
+        @if(session('error'))
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
 
             @forelse ($products as $product)
@@ -66,7 +73,7 @@
                     <div class="aspect-[4/3] w-full overflow-hidden">
                         <img
                             src="{{ $product->image
-                                ? asset('storage/images/' . $product->image)
+                                ? asset('storage/' . $product->image)
                                 : 'https://picsum.photos/400/300?random=' . $product->id }}"
                             alt="{{ $product->name }}"
                             class="w-full h-full object-cover"
@@ -80,8 +87,12 @@
                             {{ $product->name }}
                         </h3>
 
-                        <p class="text-gray-600 text-sm mb-4">
+                        <p class="text-gray-600 text-sm mb-1">
                             {{ Str::limit($product->description, 70) }}
+                        </p>
+
+                        <p class="text-gray-600 text-sm mb-4">
+                           Stok Barang : {{ $product->stock }}
                         </p>
 
                         <div class="flex justify-between items-center">
@@ -116,17 +127,20 @@
                             <!-- MODAL IMAGE -->
                             <img
                                 src="{{ $product->image
-                                    ? asset('storage/images/' . $product->image)
+                                    ? asset('storage/' . $product->image)
                                     : 'https://picsum.photos/600/400?random=' . $product->id }}"
                                 class="w-full h-64 object-cover"
                             >
 
                             <!-- MODAL CONTENT -->
                             <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">
+                                <h3 class="text-xl font-bold">
                                     {{ $product->name }}
                                 </h3>
 
+                                <p class="text-gray-600">
+                                    Stok : {{ $product->stock }}
+                                </p>
                                 <p class="text-gray-600 mb-4">
                                     {{ $product->description }}
                                 </p>
@@ -149,6 +163,7 @@
                                             type="number"
                                             name="qty"
                                             min="1"
+                                            max="{{ $product->stock }}"
                                             value="1"
                                             class="w-24 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-indigo-200"
                                         >
@@ -163,12 +178,22 @@
                                             Tutup
                                         </button>
 
-                                        <button
-                                            type="submit"
-                                            class="px-5 py-2 rounded-full bg-green-600 text-white hover:bg-green-700"
-                                        >
-                                            + Keranjang
-                                        </button>
+                                        @if($product->stock > 0)
+                                            <button
+                                                type="submit"
+                                                class="px-5 py-2 rounded-full bg-green-600 text-white hover:bg-green-700"
+                                            >
+                                                + Keranjang
+                                            </button>
+                                        @else
+                                            <button
+                                                type="button"
+                                                disabled
+                                                class="px-5 py-2 rounded-full bg-gray-400 text-white cursor-not-allowed"
+                                            >
+                                                Stok Habis
+                                            </button>
+                                        @endif
                                     </div>
                                 </form>
                             </div>

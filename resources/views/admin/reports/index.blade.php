@@ -111,15 +111,16 @@
                                 </td>
 
                                 <td class="border px-3 py-2">
-                                    {{ $item->product->user->name }}
+                                    {{-- {{ $item->product->user->name }} --}}
+                                    {{ $item->product->user->name ?? '-' }}
                                 </td>
 
                                 <td class="border px-3 py-2">
-                                    {{ $item->product->name }}
+                                    {{ $item->product->name ?? '-' }}
                                 </td>
 
                                 <td class="border px-3 py-2 text-right">
-                                    {{ $item->qty }}
+                                    {{ $item->qty ?? '-' }}
                                 </td>
 
                                 <td class="border px-3 py-2 text-right">

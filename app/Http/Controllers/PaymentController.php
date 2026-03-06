@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -19,10 +20,18 @@ class PaymentController extends Controller
         $request->validate([
             'payment_proof' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'payment_date' => 'required|date',
+            'address' => 'nullable|string|max:500'
         ]);
 
+        // Upload bukti pembayaran
         $filePath = $request->file('payment_proof')->store('payments', 'public');
 
+        // Simpan alamat ke user yang sedang login
+        $user = Auth::user();
+        $user->address = $request->address;
+        $user->save();
+
+        // Simpan data pembayaran
         Payment::create([
             'order_id' => $order->id,
             'payment_proof' => $filePath,
@@ -33,4 +42,6 @@ class PaymentController extends Controller
         return redirect()->route('orders.index')
             ->with('success', 'Bukti pembayaran berhasil dikirim, menunggu verifikasi admin.');
     }
+
+
 }

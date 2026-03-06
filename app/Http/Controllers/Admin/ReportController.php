@@ -34,18 +34,36 @@ class ReportController extends Controller
         // Rekap per seller
         $salesPerSeller = [];
 
+        // foreach ($orders as $order) {
+        //     foreach ($order->orderItems as $item) {
+        //         $sellerName = $item->product->user->name;
+        //         $subtotal   = $item->price * $item->qty;
+
+        //         if (!isset($salesPerSeller[$sellerName])) {
+        //             $salesPerSeller[$sellerName] = 0;
+        //         }
+
+        //         $salesPerSeller[$sellerName] += $subtotal;
+        //     }
+        // }
+
         foreach ($orders as $order) {
-            foreach ($order->orderItems as $item) {
-                $sellerName = $item->product->user->name;
-                $subtotal   = $item->price * $item->qty;
+        foreach ($order->orderItems as $item) {
 
-                if (!isset($salesPerSeller[$sellerName])) {
-                    $salesPerSeller[$sellerName] = 0;
-                }
-
-                $salesPerSeller[$sellerName] += $subtotal;
+            if (!$item->product || !$item->product->user) {
+                continue;
             }
+
+            $sellerName = $item->product->user->name;
+            $subtotal   = $item->price * $item->qty;
+
+            if (!isset($salesPerSeller[$sellerName])) {
+                $salesPerSeller[$sellerName] = 0;
+            }
+
+            $salesPerSeller[$sellerName] += $subtotal;
         }
+    }
 
         return view('admin.reports.index', compact(
             'orders',

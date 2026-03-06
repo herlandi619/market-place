@@ -52,7 +52,6 @@ class CartController extends Controller
     }
 
 
-
     // hapus item
     public function destroy($id)
     {

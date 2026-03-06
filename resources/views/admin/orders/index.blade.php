@@ -34,7 +34,7 @@
                         <th class="p-3 whitespace-nowrap">Total</th>
                         <th class="p-3 whitespace-nowrap">Status</th>
                         <th class="p-3 hidden md:table-cell whitespace-nowrap">Tanggal</th>
-                        <th class="p-3 text-center whitespace-nowrap">Ubah</th>
+                        {{-- <th class="p-3 text-center whitespace-nowrap">Ubah</th> --}}
                     </tr>
                 </thead>
 
@@ -69,7 +69,7 @@
                             {{ $order->created_at->format('d M Y') }}
                         </td>
 
-                        <td class="p-3 text-center">
+                        {{-- <td class="p-3 text-center">
                             <form action="{{ route('admin.orders.updateStatus', $order) }}"
                                   method="POST">
                                 @csrf
@@ -86,7 +86,7 @@
                                     </option>
                                 </select>
                             </form>
-                        </td>
+                        </td> --}}
 
                     </tr>
                     @empty

@@ -46,7 +46,7 @@
                     <div class="aspect-[4/3] w-full overflow-hidden">
                         <img
                             src="{{ $product->image 
-                                ? asset('storage/images/' . $product->image) 
+                                ? asset('storage/' . $product->image) 
                                 : 'https://picsum.photos/400/300?random=' . $product->id }}"
                             class="w-full h-full object-cover"
                             loading="lazy"
@@ -95,7 +95,7 @@
                             <!-- MODAL IMAGE -->
                             <img
                                 src="{{ $product->image 
-                                    ? asset('storage/images/' . $product->image) 
+                                    ? asset('storage/' . $product->image) 
                                     : 'https://picsum.photos/600/400?random=' . $product->id }}"
                                 class="w-full h-64 object-cover"
                             >

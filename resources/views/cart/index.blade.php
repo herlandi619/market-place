@@ -38,7 +38,7 @@
                             <td class="p-4 flex items-center gap-4">
                                 <img
                                     src="{{ $item->product->image
-                                        ? asset('storage/images/'.$item->product->image)
+                                        ? asset('storage/'.$item->product->image)
                                         : 'https://picsum.photos/80?random='.$item->product->id }}"
                                     class="w-16 h-16 object-cover rounded"
                                 >
