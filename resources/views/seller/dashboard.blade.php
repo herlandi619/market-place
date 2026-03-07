@@ -100,6 +100,19 @@
 
                 </tbody>
 
+                {{-- TOTAL --}}
+                @if($latestOrders->isNotEmpty())
+                <tfoot>
+                    <tr class="bg-gray-50 font-bold text-center border-t-2 border-gray-300">
+                        <td class="p-2 md:p-3 text-right" colspan="2">Total</td>
+                        <td class="p-2 md:p-3 text-green-600">
+                            Rp {{ number_format($latestOrders->sum(fn($o) => $o->price * $o->qty)) }}
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+                @endif
+
             </table>
 
         </div>

@@ -47,6 +47,34 @@
             </div>
         </form>
 
+        {{-- FILTER --}}
+        {{-- FILTER CATEGORY --}}
+        <div class="flex justify-center mb-8">
+            <form method="GET" action="{{ route('products.index') }}" id="filterForm">
+                @if(request('search'))
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                @endif
+
+                <select
+                    name="category"
+                    onchange="document.getElementById('filterForm').submit()"
+                    class="px-4 py-2 rounded-full border border-gray-300
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500
+                        text-sm bg-white text-gray-700"
+                >
+                    <option value="">Semua Kategori</option>
+                    @foreach($categories as $category)
+                        <option
+                            value="{{ $category->id }}"
+                            {{ request('category') == $category->id ? 'selected' : '' }}
+                        >
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
+
 
         {{-- ALERT --}}
         @if(session('success'))
@@ -216,16 +244,14 @@
             {{ $products->links() }}
         </div>
 
-        @if(request('search'))
-            <div class="text-center mb-6">
-                <a href="{{ route('products.index') }}"
-                class="px-4 py-2 text-sm rounded-full
-                                    bg-indigo-600 text-white
-                                    hover:bg-indigo-700 transition">
-                    Reset pencarian
-                </a>
-            </div>
-        @endif
+       @if(request('search') || request('category'))
+    <div class="text-center mb-6">
+        <a href="{{ route('products.index') }}"
+           class="px-4 py-2 text-sm rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition">
+            Reset Filter
+        </a>
+    </div>
+@endif
 
 
     </div>

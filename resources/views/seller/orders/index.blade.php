@@ -81,11 +81,12 @@ Pending
 Paid
 </span>
 
-<form action="{{ route('seller.orders.process', $item->id) }}" method="POST">
-@csrf
-<button class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs w-full">
-Proses
-</button>
+<form action="{{ route('seller.orders.process', $item->id) }}" method="POST"
+      onsubmit="return confirm('Apakah kamu yakin ingin memproses pesanan ini?')">
+    @csrf
+    <button class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs w-full">
+        Proses
+    </button>
 </form>
 
 @elseif($item->order->status == 'shipped')

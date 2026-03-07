@@ -90,11 +90,35 @@
                             📦 Kelola Produk
                         </a>
 
-                        <a href="{{ route('seller.orders.index') }}"
-                        class="flex items-center justify-between
-                                px-4 py-3 text-sm
-                                hover:bg-gray-100 transition">
-                            📑 Barang Pesanan
+                       <a href="{{ route('seller.orders.index') }}"
+                            class="flex items-center justify-between
+                                    px-4 py-3 text-sm
+                                    hover:bg-gray-100 transition">
+
+                            <span class="flex items-center gap-2">
+                                <!-- ICON + TITIK MERAH -->
+                                <span class="relative inline-flex items-center justify-center">
+                                    📑
+                                    @if(!empty($newOrderCount) && $newOrderCount > 0)
+                                        <span class="absolute -top-1 -right-1 flex h-2 w-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                        </span>
+                                    @endif
+                                </span>
+                                Barang Pesanan
+                            </span>
+
+                            <!-- BADGE ANGKA -->
+                            @if(!empty($newOrderCount) && $newOrderCount > 0)
+                                <span class="inline-flex items-center justify-center
+                                            min-w-[20px] h-5 px-1.5
+                                            bg-red-500 text-white text-xs font-bold
+                                            rounded-full">
+                                    {{ $newOrderCount > 99 ? '99+' : $newOrderCount }}
+                                </span>
+                            @endif
+
                         </a>
 
                        
@@ -191,7 +215,7 @@
                     </a>
 
 
-                    <a href="{{ route('seller.orders.index') }}"
+                    {{-- <a href="{{ route('seller.orders.index') }}"
                     class="flex items-center gap-3
                             w-full px-4 py-3
                             rounded-xl
@@ -207,6 +231,42 @@
 
                         <!-- TEXT -->
                         <span>Barang Pesanan</span>
+                    </a> --}}
+
+                    <a href="{{ route('seller.orders.index') }}"
+                        class="flex items-center gap-3
+                                w-full px-4 py-3
+                                rounded-xl
+                                bg-gray-100 text-gray-700 text-sm font-medium
+                                hover:bg-indigo-100 hover:text-indigo-600
+                                transition">
+
+                        <!-- ICON + BADGE -->
+                        <span class="relative inline-flex items-center justify-center">
+                            📑
+
+                            @if(!empty($newOrderCount) && $newOrderCount > 0)
+                                {{-- TITIK MERAH (ping animasi) --}}
+                                <span class="absolute -top-1 -right-1 flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                </span>
+                            @endif
+                        </span>
+
+                        <!-- TEXT -->
+                        <span>Barang Pesanan</span>
+
+                        {{-- BADGE ANGKA --}}
+                        @if(!empty($newOrderCount) && $newOrderCount > 0)
+                            <span class="ml-auto inline-flex items-center justify-center
+                                        min-w-[20px] h-5 px-1.5
+                                        bg-red-500 text-white text-xs font-bold
+                                        rounded-full">
+                                {{ $newOrderCount > 99 ? '99+' : $newOrderCount }}
+                            </span>
+                        @endif
+
                     </a>
 
                     

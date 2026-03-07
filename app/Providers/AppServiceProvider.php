@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
                 $cartCount = 0;
                 $pendingOrdersCount = 0;
                 $paidOrdersCount = 0;
+                $newOrderCount = 0;
 
                 if (auth()->check()) {
 
@@ -50,12 +51,23 @@ class AppServiceProvider extends ServiceProvider
                             ->whereDate('updated_at', today())
                             ->count();
                     }
+
+                    // ✅ Seller Notification (Order status = paid)
+                    if (auth()->user()->role === 'seller') {
+                        $newOrderCount = Order::whereHas('items.product', function ($q) {
+                            $q->where('user_id', auth()->id());
+                        })
+                        ->where('status', 'paid')
+                        ->count();
+                    }
+
                 }
 
                 $view->with([
                     'cartCount' => $cartCount,
                     'pendingOrdersCount' => $pendingOrdersCount,
-                    'paidOrdersCount' => $paidOrdersCount
+                    'paidOrdersCount' => $paidOrdersCount,
+                    'newOrderCount' => $newOrderCount
                 ]);
             });
         // ngrox 4
